@@ -1,4 +1,6 @@
-dict_months = {
+def create_empty_calendar(month_number: int)->list:
+"""creates the template for the month corresponding to month_number, puts it in a list of dicts. Each row is half an hour, each column is a day of the month."""
+    dict_months = {
     1:{'month': 'January','days': 31,'code': 'JAN'},
     2:{'month': 'February','days': 28,'code': 'FEB'},
     3:{'month': 'March','days': 31, 'code': 'MAR'},
@@ -11,10 +13,7 @@ dict_months = {
     10:{'month': 'October','days': 31,'code': 'OCT'},
     11:{'month': 'November','days': 30, 'code': 'NOV'},
     12:{'month': 'December','days': 31, 'code': 'DEC'}
-}
-
-def create_empty_calendar(month_number: int)->list:
-"""creates the template for the month corresponding to month_number, puts it in a list of dicts. Each row is half an hour, each column is a day of the month."""
+    }
     CALENDAR = []
     for i in range(48):
         row = {}
