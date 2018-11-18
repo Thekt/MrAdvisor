@@ -9,7 +9,7 @@ def calendar_writer(file_name: str, final_calendar: list)->None:
     file.close()
 
 def csv_reader(file_path: str)->list:
-    """reads the csv table named file_name and converts it to a list of dicts"""
+    """reads the csv table named file_name and converts it to a list of dicts. Note that in the path, '\' has to be replaced with '/'"""
     file = open(file_path,'r')
     output_list = [{k: v for k, v in row.items()} for row in csv.DictReader(file)]
     return output_list
