@@ -15,3 +15,11 @@ def csv_reader(file_path: str)->list:
     return output_list
     #example of use: csv_reader('C:/Users/Thomas/Jupyter Files/CSV-JSON-XML-CocaCola.csv')
     
+def json_reader(file_path: str)->list:
+    """imports the json file located at file_path and returns list of dicts. Note that in the path, '\' has to be replaced with '/'"""
+    with open(file_path,'r') as f:
+        data = json.load(f)
+    ans = []
+    for key in list(data.keys()):
+        ans.append(data[key])
+    return(ans)
