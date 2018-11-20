@@ -17,28 +17,10 @@ def create_empty_calendar(month_number: int)->list:
     CALENDAR = []
     for i in range(48):
         row = {}
-        #if i%2 == 0:
-        #    hour = str(i//2)+':00'
-        #else:
-        #    hour = str(i//2)+':30'
         if i%2 == 0:
-            if i == 0:
-                hour = '12:00 AM'
-            elif 0 < i <= 22:
-                hour = str(i//2)+':00 AM'
-            elif i == 24:
-                hour = '12:00 PM'
-            else:
-                hour = str(i//2 - 12)+':00 PM'
+            hour = str(i//2)+':00'
         else:
-            if i == 1:
-                hour = '12:30 AM'
-            elif 1 < i <= 23:
-                hour = str(i//2)+':30 AM'
-            elif i == 25:
-                hour = '12:30 PM'
-            else:
-                hour = str(i//2 - 12)+':30 PM'
+            hour = str(i//2)+':30'
         row['hour'] = hour
         for j in range(1,dict_months[month_number]['days']+1,1):
              row[dict_months[month_number]['code']+ ' ' + str(j)] = '-'  #will eventually hold event name for that day 
