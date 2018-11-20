@@ -5,19 +5,22 @@ Created on Thu Nov 15 12:27:10 2018
 @author: Kevin
 """
 import pandas as pd
-import matplotlib.pyplot as plt
-
 pd.set_option('display.width', 1000)
+
 class Calendar:
     """
     Create a calendar which contains the events
     """
     def __init__(self):
+#        file = open()
         self.cal =  [[0]*48]*31
+        #should be dictionary
+        #handle the csv
     
     def add(self,event):
         if not self.cal[event.day][event.start] or self.cal[event.day][event.start][1] < event.pref:
             self.cal[event.day][event.start] = [event.title,event.pref,event.desc]
+            #display the event with decision = 1
                 
     def delete(self,event):
         """
