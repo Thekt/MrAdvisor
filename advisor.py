@@ -98,17 +98,11 @@ def advisor(month_cal: list, month_number: int) -> list:
     month_cal = restructure(month_cal, month_number)
     
     for d in month_cal: #checking each day
-        print('day: '+str(d))
         if d: #list not empty
             dl = len(d)
             for e1 in range(dl): #checking each event in a day
-                print('event1: '+f'{e1}')
                 for e2 in range(e1+1, dl):
-                    print('event2: '+str(e2))
                     if hasClash(d[e1],d[e2]): #detecting clash
-                        print('clash happened')
-                        print(str(d[e1]['clash']),str(d[e2]['clash']))
                         flag(d[e1],d[e2]) #note down the clash
-                        print(str(d[e1]['clash']),str(d[e2]['clash']))
                         solve(d[e1],d[e2]) #work out the clash
     return month_cal

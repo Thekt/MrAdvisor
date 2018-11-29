@@ -72,3 +72,30 @@ def write(file_name: str, final_calendar: list)->None:
         writer = csv.DictWriter(fp, fieldnames = list(final_calendar[0].keys()))
         writer.writeheader()
         writer.writerows(final_calendar)
+
+def tableGenerator(filename: str, month_number: int): 
+    with open('display.html', 'w') as d, open(filename, 'r') as f:
+        d.write('<table>\n')
+        d.write("<th>")
+        d.write("<td>Hour</td>")
+        for j in range(1,DICT_MONTHS[month_number]['days']+1,1):
+            d.write(f"<td>{DICT_MONTHS[month_number]['code']+ ' ' + str(j)}</td>")
+        d.write("</th>")
+        firstline = True
+        for row  in csv.DictReader(f):
+            if firstline:    #skip first line
+                firstline = False
+                continue
+            row_value= []
+            
+            for k, v in row.items():
+                row_value.append(v)
+            d.write("<tr>")
+            for val in row_value:
+                d.write(f"<td>{val}</td>")
+            d.write("</tr>")
+        d.write("</table>")
+        return 'display.html'
+
+        
+    
