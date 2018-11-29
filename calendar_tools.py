@@ -20,6 +20,7 @@ DICT_MONTHS = {
         11:{'month': 'November','days': 30, 'code': 'NOV'},
         12:{'month': 'December','days': 31, 'code': 'DEC'}
         }
+
 def clean(cal: list):
     cleaned_cal = []
     for i in cal:
