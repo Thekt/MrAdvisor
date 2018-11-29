@@ -68,7 +68,7 @@ def write(file_name: str, final_calendar: list)->None:
     writes the final calendar (list of dicts) to a csv table named file_name 
     which will be located in the folder containing the code
     """
-    with open(file_name,'w',encoding="utf-8") as fp: #force the encoding to be utf-8 to avoid display bugs
+    with open(file_name,'w',encoding="utf-8",newline='') as fp: #force the encoding to be utf-8 to avoid display bugs
         writer = csv.DictWriter(fp, fieldnames = list(final_calendar[0].keys()))
         writer.writeheader()
         writer.writerows(final_calendar)
