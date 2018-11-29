@@ -34,8 +34,8 @@ def restructure(month_cal: list, month_number: int) -> list:
 def hasClash(event1: dict, event2: dict) -> bool:
     start1,end1 = event1['start'],event1['end']
     start2,end2 = event2['start'],event2['end']
-    x = range(start1, end1+30,30)
-    y = range(start2, end2+30,30)
+    x = [i for i in range(start1, end1+1)]
+    y = [j for j in range(start2, end2+1)]
     xs = set(x)
     return len(xs.intersection(y)) != 0
             
@@ -56,10 +56,10 @@ def solve(event1: dict, event2: dict):
         s1 = acad_score(event1)
         s2 = acad_score(event2)
         if s1 == s2: #if tie, we go to the most challenging course 
-            event1['attend'] = (event1['difficulty'] > event2['difficulty'])
+            event1['attend'] = int(event1['difficulty'] > event2['difficulty'])
             event2['attend'] = 1 - event1['attend'] 
         else:
-            event1['attend'] = (s1 > s2)
+            event1['attend'] = int(s1 > s2)
             event2['attend'] = 1 - event1['attend']
     elif (b1 and not b2) or (not b1 and b2): #one course and one event overlap
         f1,f2 = event1,event2
@@ -71,7 +71,7 @@ def solve(event1: dict, event2: dict):
         if s1 == s2: #if tie, we go to the course 
             f1['attend'],f2['attend'] = 1,0
         else:
-            f1['attend'] = (s1 > s2)
+            f1['attend'] = int(s1 > s2)
             f2['attend'] = 1 - event1['attend']
         
     else: #two events (others than courses) overlap
@@ -83,8 +83,8 @@ def solve(event1: dict, event2: dict):
                 event1['attend'] = randint(0,2) 
                 event2['attend'] = 1 - event1['attend']
             else: #preference to professional events
-                event1['attend'] = (c1 == 'P')
-                event2['attend'] = (c2 == 'P')
+                event1['attend'] = int(c1 == 'P')
+                event2['attend'] = int(c2 == 'P')
         else: 
             event1['attend'] = (s1 > s2)
             event2['attend'] = 1 - event1['attend']
@@ -97,12 +97,18 @@ def advisor(month_cal: list, month_number: int) -> list:
     """
     month_cal = restructure(month_cal, month_number)
     
-    #Detecting clashes
     for d in month_cal: #checking each day
+        print('day: '+str(d))
         if d: #list not empty
             dl = len(d)
             for e1 in range(dl): #checking each event in a day
+                print('event1: '+f'{e1}')
                 for e2 in range(e1+1, dl):
-                    if hasClash(d[e1],d[e2]):
-                        flag(d[e1],d[e2])
-                        solve(d[e1],d[e2])
+                    print('event2: '+str(e2))
+                    if hasClash(d[e1],d[e2]): #detecting clash
+                        print('clash happened')
+                        print(str(d[e1]['clash']),str(d[e2]['clash']))
+                        flag(d[e1],d[e2]) #note down the clash
+                        print(str(d[e1]['clash']),str(d[e2]['clash']))
+                        solve(d[e1],d[e2]) #work out the clash
+    return month_cal
