@@ -20,8 +20,8 @@ class Event:
         """
         Create an event with the date, the hours, the priority rating and an optional description
         """
-        self.title = title
-        self.year = year
+        self._title = title
+        self._year = year
         self.month = month
         self.day = day
         self.start = start
@@ -34,19 +34,19 @@ class Event:
         return f'{self.title} - Start time: {self.start}, End time: {self.end}, Pref: {self.pref}, Desc: {self.desc}'
 
     @property
-    def title(self):
-        return self._title
-    @title.setter
-    def title(self,val):
-        self._title = str(val)  
+    def _title(self):
+        return self.title
+    @_title.setter
+    def _title(self,val):
+        self.title = str(val)  
     
     @property
-    def year(self):
-        return self._year
-    @year.setter
-    def year(self,val):
+    def _year(self):
+        return self.year
+    @_year.setter
+    def _year(self,val):
         if type(val) == int and val > -1: 
-            self._year = val
+            self.year = val
         else:
             raise ValueError('Please enter a valid year, i.e integral and positive')
     def isleap(self):
@@ -70,9 +70,9 @@ class Event:
     def day(self,val):
         if type(val) != int and val < 1:
             raise ValueError('Please enter an integer day')
-        elif self.month in self.MORE_DAYS and val > 31: #Months with 31 days
+        elif self._month in self.MORE_DAYS and val > 31: #Months with 31 days
             raise ValueError('Please enter a valid day, i.e. beween 1 and 31')
-        elif self.month in self.LESS_DAYS and val > 30: #Months with 30 days
+        elif self._month in self.LESS_DAYS and val > 30: #Months with 30 days
             raise ValueError('Please enter a valid day, i.e. beween 1 and 30')
         #February case
         elif self.isleap():
@@ -91,7 +91,7 @@ class Event:
     @start.setter
     #hour format : 9am = 0900, 9:54am = 0954
     def start(self,val):
-        if type(val) == int and len(str(val))==4:
+        if type(val) == int and len(str(val))>=3:
             self._start = val
         else:
             raise ValueError('Please enter an hour in the correct format, i.e. 9:54am -> 0954')        
@@ -103,7 +103,7 @@ class Event:
     def end(self,val):
         if val < self._start:
             raise ValueError('Please enter an hour after the start of the event.')  
-        elif type(val) == int and len(str(val))==4:
+        elif type(val) == int and len(str(val))>=3:
             self._end = val
         else:
             raise ValueError('Please enter an hour in the correct format.')
@@ -117,12 +117,12 @@ class Event:
         
     @property
     def pref(self):
-        return self.pref
+        return self._pref
     @pref.setter
     def pref(self,val):
         #scale of preference between 0 and 10
         if type(val) == int and val > -1 and val < 10:
-            self.pref = val
+            self._pref = val
         else:
             raise ValueError('Please enter a preference score between 0 and 10, both included.')
     
