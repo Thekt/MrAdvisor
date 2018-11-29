@@ -61,62 +61,25 @@ class Calendar:
         
         #Filling the template according to the advisor
         if sub_cal:
-#            new_sub = restructure(sub_cal,month_number)  
-#            if new_sub:
-#                for i in new_sub:
-#                    for j in range(len(i)):
-#                        if i[j]['attend']:
-#                            start_pos = calendar_tools.hourToPosition(i[j]['start'])
-#                            end_pos = calendar_tools.hourToPosition(i[j]['end'])
-#                            date = calendar_tools.dayFormat(i[j]['day'],i[j]['month'])
-#                            for k in range(start_pos,end_pos+1):
-#                                month_cal[k][date] = i[j]['title']
-#                        else: 
-#                            None
-            advisor(sub_cal,month_number) #change in structure: list(month) of list(days) of dict(event)
-            if sub_cal:
-                for i in sub_cal:
-                    for j in range(len(i)):
-                        if i[j]['attend']:
-                            start_pos = calendar_tools.hourToPosition(i[j]['start'])
-                            end_pos = calendar_tools.hourToPosition(i[j]['end'])
-                            date = calendar_tools.dayFormat(i[j]['day'],i[j]['month'])
-                            for k in range(start_pos,end_pos+1):
-                                month_cal[k][date] = i[j]['title']
-                        else: 
-                            None
+            new_sub = advisor(sub_cal,month_number) #warning: change in structure: list(month) of list(days) of dict(event)
+            for i in new_sub:
+                print('sub_cal is: '+str(new_sub))
+                print('i in sub_cal: '+str(i)+" "+str(len(i)))
+                for j in range(len(i)):
+                    print('j in i: '+str(j))
+                    if i[j]['attend']:
+                        start_pos = calendar_tools.hourToPosition(i[j]['start'])
+                        end_pos = calendar_tools.hourToPosition(i[j]['end'])-1
+                        date = calendar_tools.dayFormat(i[j]['day'],i[j]['month'])
+                        for k in range(start_pos,end_pos+1):
+                            month_cal[k][date] = i[j]['title']
+                    else: 
+                        None
         #Writing in the file
         file_name = f"{calendar_tools.DICT_MONTHS[month_number]['month']}.csv"
         calendar_tools.write(file_name,month_cal)
         print(f"Calendar ready in {file_name}")
-    
 
-#    def add_old(self,event):
-#        """
-#        Add event in the calendar directly from the program
-#        """
-#        if not self.cal[event.day][event.start] or self.cal[event.day][event.start][1] < event.pref:
-#            self.cal[event.day][event.start] = [event.title,event.pref,event.desc]
-#            #display the event with decision = 1
-#    def add(self,event):
-#        e = {[('Title', event.title),
-#              ('Year', event.year),
-#              ('Month', event.month),
-#              ('Day', event.day),
-#              ('Start', event.start),
-#              ('End', event.end),
-#              ('Desc', event.desc),
-#              ('Pref', event.pref),
-#              ('Decision', event.decision)]}
-#        self.cal.append(e)
-                
-#    def delete(self,event):
-#        """
-#        Delete an event in the calendar
-#        """
-#        #TODO: check for event.title() in the current calendat
-#        #TODO: check also regex to search for title: 'Did you mean...?'
-#        del self.cal[event.day][event.start]
 
             
     
