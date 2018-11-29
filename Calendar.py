@@ -6,8 +6,8 @@ Created on Thu Nov 15 12:27:10 2018
 """
 
 import csv
+from advisor import advisor
 import calendar_tools
-from advisor import advisor, restructure
 
 class Calendar:
     """
@@ -33,18 +33,18 @@ class Calendar:
         reads the csv table named file_name and converts it to a list of dicts. 
         Note that in the path, '\' has to be replaced with '/'
         """
-        file = open(file_path,'r')
-        temp_cal = []
-        for row in csv.DictReader(file):
-            temp_entry = {}
-            temp_entry['id']= len(temp_cal)
-            for k, v in row.items():
-                temp_entry[k] = v
-            temp_entry['clash'] = []
-            temp_entry['attend'] = 1
-            temp_entry['tie'] = 0
-            temp_cal.append(temp_entry)
-        self.cal = calendar_tools.clean(temp_cal)
+        with open(file_path,'r') as fp:
+            temp_cal = []
+            for row in csv.DictReader(fp):
+                temp_entry = {}
+                temp_entry['id']= len(temp_cal)
+                for k, v in row.items():
+                    temp_entry[k] = v
+                temp_entry['clash'] = []
+                temp_entry['attend'] = 1
+                temp_entry['tie'] = 0
+                temp_cal.append(temp_entry)
+            self.cal = calendar_tools.clean(temp_cal)
         
     def fill(self, month_number: int):
         """
@@ -63,10 +63,7 @@ class Calendar:
         if sub_cal:
             new_sub = advisor(sub_cal,month_number) #warning: change in structure: list(month) of list(days) of dict(event)
             for i in new_sub:
-                print('sub_cal is: '+str(new_sub))
-                print('i in sub_cal: '+str(i)+" "+str(len(i)))
                 for j in range(len(i)):
-                    print('j in i: '+str(j))
                     if i[j]['attend']:
                         start_pos = calendar_tools.hourToPosition(i[j]['start'])
                         end_pos = calendar_tools.hourToPosition(i[j]['end'])-1
@@ -79,8 +76,10 @@ class Calendar:
         file_name = f"{calendar_tools.DICT_MONTHS[month_number]['month']}.csv"
         calendar_tools.write(file_name,month_cal)
         print(f"Calendar ready in {file_name}")
+        return file_name
 
-
+def displayT(filename: str, month_number: int):
+    return calendar_tools.tableGenerator(filename, month_number)
             
     
           
