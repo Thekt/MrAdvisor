@@ -7,7 +7,7 @@ Created on Thu Nov 15 12:27:10 2018
 
 import csv
 import calendar_tools
-import advisor
+from advisor import advisor, restructure
 
 class Calendar:
     """
@@ -61,21 +61,30 @@ class Calendar:
         
         #Filling the template according to the advisor
         if sub_cal:
-            new_sub = advisor(sub_cal,month_number) #change in structure: list(month) of list(days) of dict(event)
-            for i in new_sub:
-                if i['attend']:
-                    pos = calendar_tools.hourToPosition(i['start'])
-                    date = calendar_tools.dayFormat(i['day'],i['month'])
-                    month_cal[pos][date] = i['title']
-                else: 
-                    None
-#               current_event = month_cal[pos][date]
-#               if current_event:
-#                   current_event = advisor(current_event,i)
-#                   pass
-#               else: 
-#                   current_event = i['title']
-        
+#            new_sub = restructure(sub_cal,month_number)  
+#            if new_sub:
+#                for i in new_sub:
+#                    for j in range(len(i)):
+#                        if i[j]['attend']:
+#                            start_pos = calendar_tools.hourToPosition(i[j]['start'])
+#                            end_pos = calendar_tools.hourToPosition(i[j]['end'])
+#                            date = calendar_tools.dayFormat(i[j]['day'],i[j]['month'])
+#                            for k in range(start_pos,end_pos+1):
+#                                month_cal[k][date] = i[j]['title']
+#                        else: 
+#                            None
+            advisor(sub_cal,month_number) #change in structure: list(month) of list(days) of dict(event)
+            if sub_cal:
+                for i in sub_cal:
+                    for j in range(len(i)):
+                        if i[j]['attend']:
+                            start_pos = calendar_tools.hourToPosition(i[j]['start'])
+                            end_pos = calendar_tools.hourToPosition(i[j]['end'])
+                            date = calendar_tools.dayFormat(i[j]['day'],i[j]['month'])
+                            for k in range(start_pos,end_pos+1):
+                                month_cal[k][date] = i[j]['title']
+                        else: 
+                            None
         #Writing in the file
         file_name = f"{calendar_tools.DICT_MONTHS[month_number]['month']}.csv"
         calendar_tools.write(file_name,month_cal)
