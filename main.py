@@ -5,7 +5,7 @@ Created on Thu Nov 15 12:52:43 2018
 @author: Kevin
 """
 
-from Calendar import Calendar
+from timetable import Calendar, displayT
 import re
 import sys
 
