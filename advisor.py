@@ -63,16 +63,21 @@ def solve(event1: dict, event2: dict):
             event2['attend'] = 1 - event1['attend']
     elif (b1 and not b2) or (not b1 and b2): #one course and one event overlap
         f1,f2 = event1,event2
+        print(f"event1: {f1['title']}, event2: {f2['title']}")
         #switch event number ta always have e1 as academic
         if not b1:
             f1,f2 = f2,f1
+            print(f"event1: {f1['title']}, event2: {f2['title']}")
         s1 = acad_score(f1)
         s2 = f2['priority']
+        print(f"s1: {s1}, s2: {s2}")
         if s1 == s2: #if tie, we go to the course 
             f1['attend'],f2['attend'] = 1,0
         else:
             f1['attend'] = int(s1 > s2)
-            f2['attend'] = 1 - event1['attend']
+            print(f"s1 > s2: {s1 > s2}")
+            f2['attend'] = 1 - f1['attend']
+            print(f"event1: {f1['attend']}, event2: {f2['attend']}")
         
     else: #two events (others than courses) overlap
         s1,s2 = event1['priority'],event2['priority']
