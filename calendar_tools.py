@@ -21,7 +21,16 @@ DICT_MONTHS = {
         12:{'month': 'December','days': 31, 'code': 'DEC'}
         }
 
+def dayInMonth(month_number: int) -> int:
+    """
+    return the number of days in a month
+    """
+    return DICT_MONTHS[month_number]['days']
+
 def clean(cal: list):
+    """
+    check if the entries of the calendar are valid
+    """
     cleaned_cal = []
     for i in cal:
         cleaned_entry = i
@@ -61,6 +70,9 @@ def hourToPosition(hour):
     return round((((hour - HourMin) * (PosMax - PosMin)) / (HourMax - HourMin)) + PosMin)
 
 def dayFormat(day_number,month_number):
+    """
+    convert a given day and month into a standars format
+    """
     return f"{DICT_MONTHS[month_number]['code']} {day_number}"
 
 def write(file_name: str, final_calendar: list)->None:
@@ -74,6 +86,9 @@ def write(file_name: str, final_calendar: list)->None:
         writer.writerows(final_calendar)
 
 def tableGenerator(filename: str, month_number: int): 
+    """
+    create a htlm file for the display
+    """
     with open('display.html', 'w') as d, open(filename, 'r') as f:
         d.write('<table>\n')
         d.write("<th>")
