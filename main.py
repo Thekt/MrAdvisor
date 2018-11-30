@@ -27,7 +27,7 @@ while match == None:
 month_number = int(input('Enter the month number: '))
 if month_number == 'quit':
        sys.exit()
-while type(month_number) != int and month_number < 1 and month_number > 12:
+while type(month_number) != int or month_number < 1 or month_number > 12:
    month_number = int(input('Please enter a valid month number: '))
    if month_number == 'quit':
        sys.exit()
