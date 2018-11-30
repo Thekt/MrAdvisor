@@ -89,7 +89,8 @@ def tableGenerator(filename: str, month_number: int):
     """
     create a htlm file for the display
     """
-    with open('display.html', 'w') as d, open(filename, 'r') as f:
+    display_file = f"display_{DICT_MONTHS[month_number]['code']}.html"
+    with open(display_file, 'w') as d, open(filename, 'r') as f:
         d.write('<table>\n')
         d.write("<th>")
         d.write("<td>Hour</td>")
@@ -110,7 +111,7 @@ def tableGenerator(filename: str, month_number: int):
                 d.write(f"<td>{val}</td>")
             d.write("</tr>")
         d.write("</table>")
-        return 'display.html'
+        return display_file
 
         
     
