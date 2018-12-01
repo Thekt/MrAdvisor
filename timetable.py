@@ -20,13 +20,6 @@ class Calendar:
         """
         self.cal = []
 
-#    def load_old(self,file):
-#        """
-#        Load events in the calendar from an external file
-#        """
-#        with open(file) as fp:
-#            reader = csv.DictReader(fp)
-#            self.cal = list(reader)
     
     def load(self,file_path: str)->list:
         """
