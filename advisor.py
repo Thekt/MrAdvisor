@@ -101,8 +101,10 @@ def advisor(month_cal: list, month_number: int) -> list:
         if d: #list not empty
             dl = len(d)
             for e1 in range(dl): #checking each event in a day
-                for e2 in range(e1+1, dl):
-                    if hasClash(d[e1],d[e2]): #detecting clash
-                        flag(d[e1],d[e2]) #note down the clash
-                        solve(d[e1],d[e2]) #work out the clash
+                if d[e1]['attend']: #byBlair: only work on events not worked on yet or selected earlier; requires 'attend' initialized as 1
+                    for e2 in range(e1+1, dl):
+                        if d[e2]['attend']: #byBlair: only work on events not worked on yet or selected earlier; requires 'attend' initialized as 1
+                            if hasClash(d[e1],d[e2]): #detecting clash
+                                flag(d[e1],d[e2]) #note down the clash
+                                solve(d[e1],d[e2]) #work out the clash
     return month_cal
