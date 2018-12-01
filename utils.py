@@ -57,7 +57,7 @@ def create_clashes(n: int, filename: str = 'sample_calendar.csv'):
         create_clash(filename)
     print(filename)
     
-create_clashes(10)
+create_clashes(100)
        
         
    
