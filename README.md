@@ -38,7 +38,7 @@ the user will have to fill-in the following attributes:
 
 Here is an example for the table:
 
-![](media/1d5eed94af97d160658a92c051d8a886.jpg)
+![](https://github.com/Thekt/MrAdvisor/blob/master/archive/example_of_input.JPG)
 
 2/3 Run the "main.py" file. The user will be invited to enter the path of the
 csv table described just above. Then, he/she will be invited to enter the month
