@@ -87,7 +87,9 @@ previous method.
     always pick the academic one. For all remaining conflicts, one will be
     picked at random.
 
--   Calendar_tools.py: different functions used for formatting and displaying of
+-   Calendar_tools.py:
+    
+    different functions used for formatting and displaying of
     the calendar.
 
 -   Timetable.py:
@@ -102,4 +104,6 @@ previous method.
 
     -   display: returns the output of calendar_tools.tableGenerator
 
--   Utils.py: functions used for testing clashes resolution
+-   Utils.py: 
+    
+    functions used for testing clashes resolution
