@@ -70,11 +70,11 @@ previous method.
 
 -   Main.py:
 
->   Run this script to get the final calendar output. Creates a new instance of
->   Calendar class. Asks for path of input csv table and month number. Then
->   loads the input csv table, creates the output calendar file
->   (“Calendar.fill()” function). Finally, saves the result into a csv table and
->   HTML file (“displayT()” function).
+    Run this script to get the final calendar output. Creates a new instance of
+    Calendar class. Asks for path of input csv table and month number. Then
+    loads the input csv table, creates the output calendar file
+    (“Calendar.fill()” function). Finally, saves the result into a csv table and
+    HTML file (“displayT()” function).
 
 -   Advisor.py:
 
