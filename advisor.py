@@ -22,16 +22,14 @@ DICT_MONTHS = {
         }
 
 def restructure(month_cal: list, month_number: int) -> list:
-    """
-    turn a month(list) consistend in events(dict) into a month(list) 
-    consisted in days(list), each days consisted in events(list)
-    """
+    """change the structure of the calendar"""
     new_month_cal = [[] for i in range(DICT_MONTHS[month_number]['days'])]
     for i in month_cal:
         new_month_cal[i['day']-1].append(i)
     return new_month_cal
 
 def hasClash(event1: dict, event2: dict) -> bool:
+    """test if two given events clash regarding the time"""
     start1,end1 = event1['start'],event1['end']
     start2,end2 = event2['start'],event2['end']
     x = [i for i in range(start1, end1+1)]
@@ -40,16 +38,16 @@ def hasClash(event1: dict, event2: dict) -> bool:
     return len(xs.intersection(y)) != 0
             
 def flag(event1: dict, event2: dict):
+    """append the id of the two given events to their clash list"""
     event1['clash'].append(event2['id'])
     event2['clash'].append(event1['id'])
 
 def acad_score(e):
-    """
-    Determine the score of academic ('A') events
-    """
+    """Determine the score of academic ('A') events"""
     return e['priority'] + e['priority'] * e['difficulty'] * (e['rating'] ** 2) / 10000
 
 def solve(event1: dict, event2: dict):
+    """determine which event to attend among the two given"""
     b1 = (event1['category'] == 'A')
     b2 = (event2['category'] == 'A')
     if b1 and b2: #two courses overlap
@@ -92,9 +90,7 @@ def solve(event1: dict, event2: dict):
     
     
 def advisor(month_cal: list, month_number: int) -> list:
-    """
-    choose the events to attend in case of conflicting schedules for a particular month
-    """
+    """choose the events to attend in case of conflicting schedules for a particular month"""
     month_cal = restructure(month_cal, month_number)
     
     for d in month_cal: #checking each day
