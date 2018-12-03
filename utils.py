@@ -10,9 +10,7 @@ for td in (start_date + timedelta(minutes=30*it) for it in range(49)):
     list_time_slot.append(td.strftime("%H%M"))
      
 def create_clash(filename: str): 
-    """
-    Create random clash events and write the events in a file  
-    """
+    """Create 2 events randomly that will clash and write the events in a file""" 
     category = ['A', 'P', 'C']
     year = 2018
     month = random.randint(1,12)
@@ -50,6 +48,7 @@ def create_clash(filename: str):
           
 #pass number of clash events needed        
 def create_clashes(n: int, filename: str = 'sample_calendar.csv'):
+    """Create a .csv file (future calendar) full of conflicting events"""
     with open(filename, 'w', newline='') as cal:
         cal_writer = csv.writer(cal, delimiter=',')
         cal_writer.writerow(['title', 'category', 'year', 'month', 'day', 'start', 'end', 'priority', 'difficulty', 'rating'])
