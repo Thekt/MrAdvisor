@@ -22,43 +22,33 @@ DICT_MONTHS = {
         }
 
 def restructure(month_cal: list, month_number: int) -> list:
-    """
-    Turn a month(list) consisted in events(dict) into a month(list) 
-    consisted in days(list); each days consisted in events(list)
-    """
-    new_month_cal = [[] for i in range(DICT_MONTHS[month_number]['days'])]  #Creates an empty list for new month
+    """change the structure of the calendar"""
+    new_month_cal = [[] for i in range(DICT_MONTHS[month_number]['days'])] #Creates an empty list for new month
+
     for i in month_cal:
         new_month_cal[i['day']-1].append(i)
-    return new_month_cal    #Returns empty month's calendar
-
-def hasClash(event1: dict, event2: dict) -> bool:   #Check if the month in input has any clashes
-    """
-    Returns length of intersection of clash if a clash exists between two events
-    """
-    start1,end1 = event1['start'],event1['end'] 
-    start2,end2 = event2['start'],event2['end'] 
-    x = [i for i in range(start1, end1+1)]   #Takes all time of event 1
-    y = [j for j in range(start2, end2+1)] #Takes all time of event 2
-    xs = set(x)  #For set intersection method usage
+    return new_month_cal    #Returns empty month's calenda
+           
+def hasClash(event1: dict, event2: dict) -> bool:  #Check if the month in input has any clashes
+    """test if two given events clash regarding the time"""
+    start1,end1 = event1['start'],event1['end']
+    start2,end2 = event2['start'],event2['end']
+    x = [i for i in range(start1, end1+1)]
+    y = [j for j in range(start2, end2+1)]
+    xs = set(x)
     return len(xs.intersection(y)) != 0
             
-def flag(event1: dict, event2: dict):   #Flags event when clash is found
-    """
-    Sets flag for events where a clash is present
-    """
-    event1['clash'].append(event2['id'])   
+def flag(event1: dict, event2: dict):  #Flags event when clash is found
+    """append the id of the two given events to their clash list"""
+    event1['clash'].append(event2['id'])
     event2['clash'].append(event1['id'])
 
 def acad_score(e):
-    """
-    Determines the score of academic ('A') events
-    """
+    """Determine the score of academic ('A') events"""
     return e['priority'] + e['priority'] * e['difficulty'] * (e['rating'] ** 2) / 10000
 
 def solve(event1: dict, event2: dict):
-    """
-    Solves the clashes and chooses event that has more priority according to our algorithm
-    """
+    """determine which event to attend among the two given"""
     b1 = (event1['category'] == 'A')
     b2 = (event2['category'] == 'A')
     if b1 and b2: #Two courses overlap
@@ -81,7 +71,7 @@ def solve(event1: dict, event2: dict):
             f1['attend'],f2['attend'] = 1,0
         else:
             f1['attend'] = int(s1 > s2)
-            f2['attend'] = 1 - event1['attend']
+            f2['attend'] = 1 - f1['attend']
         
     else: #Two events (others than courses) overlap
         s1,s2 = event1['priority'],event2['priority']
@@ -101,17 +91,18 @@ def solve(event1: dict, event2: dict):
     
     
 def advisor(month_cal: list, month_number: int) -> list:
-    """
-    Choose the events to attend in case of conflicting schedules for a particular month
-    """
+    """choose the events to attend in case of conflicting schedules for a particular month"""
+
     month_cal = restructure(month_cal, month_number)
     
     for d in month_cal: #checking each day
         if d: #list not empty
             dl = len(d)
             for e1 in range(dl): #checking each event in a day
-                for e2 in range(e1+1, dl):
-                    if hasClash(d[e1],d[e2]): #detecting clash
-                        flag(d[e1],d[e2]) #note down the clash
-                        solve(d[e1],d[e2]) #work out the clash
+                if d[e1]['attend']: #byBlair: only work on events not worked on yet or selected earlier; requires 'attend' initialized as 1
+                    for e2 in range(e1+1, dl):
+                        if d[e2]['attend']: #byBlair: only work on events not worked on yet or selected earlier; requires 'attend' initialized as 1
+                            if hasClash(d[e1],d[e2]): #detecting clash
+                                flag(d[e1],d[e2]) #note down the clash
+                                solve(d[e1],d[e2]) #work out the clash
     return month_cal

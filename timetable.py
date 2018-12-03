@@ -10,23 +10,12 @@ from advisor import advisor
 import calendar_tools
 
 class Calendar:
-    """
-    Create a calendar which contains the events
-    """
+    """Create a calendar which contains the events"""
     
     def __init__(self):
-        """
-        Initialize a calendar as a list
-        """
+        """Initialize a calendar as a list"""
         self.cal = []
 
-#    def load_old(self,file):
-#        """
-#        Load events in the calendar from an external file
-#        """
-#        with open(file) as fp:
-#            reader = csv.DictReader(fp)
-#            self.cal = list(reader)
     
     def load(self,file_path: str)->list:
         """
@@ -47,9 +36,7 @@ class Calendar:
             self.cal = calendar_tools.clean(temp_cal)
         
     def fill(self, month_number: int):
-        """
-        Fill an empty month with the events in the calendar and return a csv file of the month
-        """
+        """Fill an empty month with the events in the calendar"""
         #Extract the events for the relevant month
         sub_cal = [] #list(month) of dict(event)
         for i in self.cal:
@@ -79,6 +66,7 @@ class Calendar:
         return file_name
 
 def displayT(filename: str, month_number: int):
+    """write a html file for display"""
     return calendar_tools.tableGenerator(filename, month_number)
             
     

@@ -21,7 +21,12 @@ DICT_MONTHS = {
         12:{'month': 'December','days': 31, 'code': 'DEC'}
         }
 
+def dayInMonth(month_number: int) -> int:
+    """return the number of days in a month"""
+    return DICT_MONTHS[month_number]['days']
+
 def clean(cal: list):
+    """check if the entries of the calendar are valid"""
     cleaned_cal = []
     for i in cal:
         cleaned_entry = i
@@ -51,9 +56,7 @@ def create_empty_calendar(month_number: int)->list:
     return(CALENDAR)
 
 def hourToPosition(hour):
-    """
-    convert a given hour to the position of that hour in a day, divided in 30-minute periods
-    """
+    """convert a given hour to the position of that hour in a day, divided in 30-minute periods"""
     HourMin = 0
     HourMax = 2330
     PosMin = 0
@@ -61,20 +64,20 @@ def hourToPosition(hour):
     return round((((hour - HourMin) * (PosMax - PosMin)) / (HourMax - HourMin)) + PosMin)
 
 def dayFormat(day_number,month_number):
+    """convert a given day and month into a standars format"""
     return f"{DICT_MONTHS[month_number]['code']} {day_number}"
 
 def write(file_name: str, final_calendar: list)->None:
-    """
-    writes the final calendar (list of dicts) to a csv table named file_name 
-    which will be located in the folder containing the code
-    """
+    """writes the final calendar (list of dicts) to a csv table named file_name"""
     with open(file_name,'w',encoding="utf-8",newline='') as fp: #force the encoding to be utf-8 to avoid display bugs
         writer = csv.DictWriter(fp, fieldnames = list(final_calendar[0].keys()))
         writer.writeheader()
         writer.writerows(final_calendar)
 
 def tableGenerator(filename: str, month_number: int): 
-    with open('display.html', 'w') as d, open(filename, 'r') as f:
+    """create a htlm file for the display"""
+    display_file = f"display_{month_number}.html"
+    with open(display_file, 'w') as d, open(filename, 'r') as f:
         d.write('<table>\n')
         d.write("<th>")
         d.write("<td>Hour</td>")
@@ -95,7 +98,7 @@ def tableGenerator(filename: str, month_number: int):
                 d.write(f"<td>{val}</td>")
             d.write("</tr>")
         d.write("</table>")
-        return 'display.html'
+        return display_file
 
         
     

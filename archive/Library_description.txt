@@ -1,0 +1,12 @@
+Requirement
+
+The program was built on internal libraries. No external libraries will be required. The following 4 internal libraries should be imported when running the program.
+
+- re
+- sys
+- csv
+- random
+
+Users may follow the instructions and execute the “main.py” file to generate a “csv” file and “HTML” file, which store the results by the program. For visualization of the results, please execute the “Presentation.ipynb” which enables an in-program display.
+
+Hope you have fun with Mr. Advisor.
