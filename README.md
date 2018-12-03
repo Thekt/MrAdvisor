@@ -13,7 +13,7 @@ events you are interested in.
 
 **Installation**
 
-1/1 Clone the project repository on your machine.
+1/1 Clone the project repository on your machine. No external libraries needed (hence, no requirements.txt)
 
 **Use Case**
 
